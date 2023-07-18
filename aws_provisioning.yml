@@ -1,0 +1,18 @@
+---
+- name: Provision EC2 instance
+  hosts: localhost
+  gather_facts: False
+  tasks:
+    - name: Create EC2 instance
+      ec2_instance:
+        instance_type: t2.micro
+        image: ami-0c94855ba95c71c99
+        key_name: my-key-pair
+        region: us-west-2
+        count: 1
+        vpc_subnet_id: subnet-0123456789abcdef0
+        assign_public_ip: true
+      register: ec2
+    - name: Print instance details
+      debug:
+        var: ec2
